@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                git branch: 'main',
                 git 'https://github.com/ignatuschka/test-jenkins-repo.git'
             }
         }

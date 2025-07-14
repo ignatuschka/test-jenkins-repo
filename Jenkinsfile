@@ -3,15 +3,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Правильный синтаксис для checkout из Git
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    extensions: [],
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/ignatuschka/test-jenkins-repo.git'
-                    ]]
-                ])
+                git branch: 'main', 
+                    url: 'https://github.com/ignatuschka/test-jenkins-repo.git'
             }
         }
         stage('Build') {

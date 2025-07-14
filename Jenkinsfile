@@ -1,18 +1,12 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                echo "Клонируем репозиторий через SSH..."
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    extensions: [],
-                    userRemoteConfigs: [[
-                        url: 'git@github.com:ignatuschka/test-jenkins-repo.git',
-                        credentialsId: 'e825c3d9-841c-49ff-bea4-b164687ecca9'
-                    ]]
-                ])
+                git(
+                    url: 'https://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@github.com/ignatuschka/test-jenkins-repo.git',
+                    branch: 'main'
+                )
             }
         }
         stage('Build') {

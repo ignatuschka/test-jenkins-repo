@@ -1,0 +1,15 @@
+name: Trigger Jenkins
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run remote script via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 10.129.0.12
+          username: punklab
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            curl -X POST http://localhost:8080/job/github-auto-trigger/build?token=remoteToken

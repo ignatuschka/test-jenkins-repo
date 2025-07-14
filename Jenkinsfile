@@ -1,15 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                git branch: 'main', 
-                    url: 'https://github.com/ignatuschka/test-jenkins-repo.git'
+                echo "Клонируем репозиторий..."
+                git 'https://github.com/ignatuschka/test-jenkins-repo.git'
             }
         }
         stage('Build') {
             steps {
-                sh 'echo "Building on macOS: $(uname -a)"'
+                echo "Сборка на macOS: $(uname -a)"
+                sh 'ls -la'  # Проверим содержимое репозитория
             }
         }
     }

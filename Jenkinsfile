@@ -3,21 +3,24 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                echo "Клонируем репозиторий..."
-                git url: 'https://github.com/ignatuschka/test-jenkins-repo.git', branch: 'main'
+                echo "Клонируем репозиторий через SSH..."
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    extensions: [],
+                    userRemoteConfigs: [[
+                        url: 'git@github.com:ignatuschka/test-jenkins-repo.git',
+                        credentialsId: 'e825c3d9-841c-49ff-bea4-b164687ecca9'
+                    ]]
+                ])
             }
         }
         stage('Build') {
             steps {
                 script {
-                    // Вариант 1: Через переменную
                     def uname = sh(script: 'uname -a', returnStdout: true).trim()
-                    echo "Сборка на macOS: ${uname}"
-                    
-                    // Вариант 2: Через отдельную sh-команду
-                    sh 'echo "Сборка на macOS: $(uname -a)"'
-                    
-                    sh 'ls -la'  // Проверим содержимое репозитория
+                    echo "Сборка на: ${uname}"
+                    sh 'ls -la'
                 }
             }
         }

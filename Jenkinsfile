@@ -1,19 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                git(
-                    url: 'https://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@github.com/ignatuschka/test-jenkins-repo.git',
-                    branch: 'main'
-                )
+                echo "Клонируем репозиторий..."
+                git url: 'https://github.com/ignatuschka/test-jenkins-repo.git', branch: 'main'
             }
         }
         stage('Build') {
             steps {
                 script {
-                    def uname = sh(script: 'uname -a', returnStdout: true).trim()
-                    echo "Сборка на: ${uname}"
+                    sh 'echo "Сборка на: $(uname -a)"'
                     sh 'ls -la'
                 }
             }
